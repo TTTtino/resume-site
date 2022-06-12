@@ -5,17 +5,17 @@ import { useState, useRef, useEffect } from "react";
 import { useSpring, animated, config } from "react-spring";
 import { Navbar } from "../components/sidebar";
 
-const Home: NextPage = () => {
+const Skills: NextPage = () => {
   return (
     <div className="flex">
       <Navbar title="Tino Tom" />
       <main className="flex-1 grow p-4">
-        <div id="homeSection" className="h-screen bg-red-500">
-          Home
+        <div id="skillsSection" className="h-screen bg-red-500">
+          Skills
         </div>
       </main>
     </div>
   );
 };
 
-export default Home;
+export default Skills;
