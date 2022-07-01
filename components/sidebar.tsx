@@ -2,58 +2,87 @@ import React, { RefObject } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import resumePic from "../public/profilepic.jpg";
-import LinkedInLogo from "../public/linkedin.svg";
-import MailLogo from "../public/email-square.svg";
+import { IoMdSchool, IoMdHome } from "react-icons/io"
+import { RiSuitcaseFill, RiFileCodeFill, RiLightbulbFlashFill, RiLinkedinBoxFill, RiMailFill } from "react-icons/ri"
+import { NavInfo } from "../data/navigation";
+import { useRouter } from "next/router";
+
+const getNavIcon = (item: string) => {
+  switch (item) {
+    case "Home":
+      return <IoMdHome className="inline-block w-8 h-full md:mr-2" />
+    case "Experience":
+      return <RiSuitcaseFill className="inline-block w-8 h-full md:mr-2" />
+    case "Qualifications":
+      return <IoMdSchool className="inline-block w-8 h-full md:mr-2" />
+    case "Skills":
+      return <RiLightbulbFlashFill className="inline-block w-8 h-full md:mr-2" />
+    case "Projects & Activities":
+      return <RiFileCodeFill className="inline-block w-8 h-full md:mr-2" />
+    default:
+      break;
+  }
+}
+
+type NavElementProps = {
+  info: NavInfo
+  active: boolean
+}
+
+const NavElement = (props: NavElementProps) => {
+
+  return (<li className={`mx-2 bg-white rounded-md ${props.active ? "text-primary-blue-800 bg-opacity-75" : "text-white/80 bg-opacity-0 hover:bg-opacity-30"}`}>
+    <Link href={props.info.href} className="w-full h-full">
+      <a className="block w-full h-full p-3">
+        {getNavIcon(props.info.name)}
+        <span className="hidden md:inline-block">{props.info.name}</span>
+      </a>
+    </Link>
+  </li>)
+}
 
 type NavbarProps = {
-  title: string;
+  title: string,
+  navigationData: NavInfo[]
 };
 
 export const Navbar = (props: NavbarProps) => {
-  function goToSection(secRef: RefObject<any>) {
-    if (secRef.current != null) {
-    }
-  }
-
+  const router = useRouter()
   return (
-    <div className={`sticky top-0 left-0 h-screen bg-gray-800 w-96`}>
-      <div className="flex flex-col items-center w-min mx-auto my-10">
-        <h1 className="text-white text-6xl m-4">{props.title}</h1>
-        <div className="relative h-64 w-64 m-4">
-          <Image
-            src={resumePic}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-full"
-          />
-        </div>
-        <div className="flex flex-row mb-4">
-          <LinkedInLogo width={40} height={40} className="m-2" />
-          <MailLogo width={40} height={40} fill={"white"} className="m-2" />
-        </div>
-        <ul>
-          <li>
-            <Link id="expButton" className="rounded-full" href="/experience">
-              Experience
-            </Link>
-          </li>
-          <li>
-            <Link
-              id="qualButton"
+    <div className="sticky top-0 left-0 h-screen bg-gradient-to-br from-primary-blue-800 to-primary-blue-400 min-w-content">
+      <div className="flex flex-col items-center h-full mx-auto">
+
+        <div className="flex flex-col items-center mt-2 rounded-md group">
+          <div className="relative w-16 h-16 m-1 md:w-44 md:h-44">
+            <Image
+              src={resumePic}
+              alt="Picture of Tino Tom"
+              layout="fill"
+              objectFit="cover"
               className="rounded-full"
-              href="/qualifications"
-            >
-              Qualifications
+            />
+          </div>
+          <h1 className="hidden text-3xl font-bold text-white md:block">{props.title}</h1>
+        </div>
+
+        <ul className="flex flex-col h-full gap-2 mt-2">
+          {props.navigationData.map((item, index) => {
+            return <NavElement key={index} info={item} active={router.pathname === item.href ? true : false} />
+          })}
+
+
+          <li className="flex flex-col mt-auto mb-6">
+            <Link href="https://www.linkedin.com/in/tino-tom/">
+              <a className="p-3 mx-2 bg-white bg-opacity-0 rounded-md text-white/80 hover:bg-opacity-30">
+                <RiLinkedinBoxFill className="inline-block w-8 h-full" />
+                <span className="hidden md:inline-block">LinkedIn</span>
+              </a>
             </Link>
-          </li>
-          <li>
-            <Link id="skillButton" className="rounded-full" href="/skills">
-              Skills
-            </Link>
-          </li>
-          <li>
-            <Link id="projButton" className="rounded-full" href="/projects">
-              Projects & Activities
+            <Link href="mailto:tinotom7:outlook.com">
+              <a className="p-3 mx-2 bg-white bg-opacity-0 rounded-md text-white/80 hover:bg-opacity-30">
+                <RiMailFill className="inline-block w-8 h-full" />
+                <span className="hidden md:inline-block">Email Me</span>
+              </a>
             </Link>
           </li>
         </ul>
