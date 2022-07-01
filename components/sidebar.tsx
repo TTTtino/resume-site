@@ -31,7 +31,7 @@ type NavElementProps = {
 
 const NavElement = (props: NavElementProps) => {
 
-  return (<li className={`mx-2 bg-white rounded-md ${props.active ? "text-primary-blue-800 bg-opacity-75" : "text-white/80 bg-opacity-0 hover:bg-opacity-30"}`}>
+  return (<li className={`mx-2 bg-white rounded-md  md:w-64 ${props.active ? "text-primary-blue-800 bg-opacity-75 font-extrabold" : "text-white/80 bg-opacity-0 hover:bg-opacity-30"}`}>
     <Link href={props.info.href} className="w-full h-full">
       <a className="block w-full h-full p-3">
         {getNavIcon(props.info.name)}
@@ -74,13 +74,13 @@ export const Navbar = (props: NavbarProps) => {
           <li className="flex flex-col mt-auto mb-6">
             <Link href="https://www.linkedin.com/in/tino-tom/">
               <a className="p-3 mx-2 bg-white bg-opacity-0 rounded-md text-white/80 hover:bg-opacity-30">
-                <RiLinkedinBoxFill className="inline-block w-8 h-full" />
+                <RiLinkedinBoxFill className="inline-block w-8 h-full md:mr-2" />
                 <span className="hidden md:inline-block">LinkedIn</span>
               </a>
             </Link>
             <Link href="mailto:tinotom7:outlook.com">
               <a className="p-3 mx-2 bg-white bg-opacity-0 rounded-md text-white/80 hover:bg-opacity-30">
-                <RiMailFill className="inline-block w-8 h-full" />
+                <RiMailFill className="inline-block w-8 h-full md:mr-2" />
                 <span className="hidden md:inline-block">Email Me</span>
               </a>
             </Link>
