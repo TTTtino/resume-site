@@ -18,7 +18,7 @@ const Page: NextPage = (props: PageProps) => {
                     rel="stylesheet"
                 />
             </Head>
-            <div className="flex h-screen font-Roboto">
+            <div className="flex font-Roboto">
                 <Navbar title="Tino Tom" navigationData={navigationData} />
                 <main className="flex-1 p-4 ">
                     {props?.children}
