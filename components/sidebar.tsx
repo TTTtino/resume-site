@@ -49,7 +49,7 @@ type NavbarProps = {
 export const Navbar = (props: NavbarProps) => {
   const router = useRouter()
   return (
-    <div className="sticky top-0 left-0 h-screen bg-gradient-to-br from-primary-blue-800 to-primary-blue-400 min-w-content">
+    <div className="sticky top-0 left-0 h-screen shadow-2xl bg-gradient-to-br from-primary-blue-800 to-primary-blue-400 min-w-content">
       <div className="flex flex-col items-center h-full mx-auto">
 
         <div className="flex flex-col items-center mt-2 rounded-md group">
