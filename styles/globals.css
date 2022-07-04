@@ -4,6 +4,6 @@
 
 @layer components{
     .highlight-blue-gradient {
-        @apply font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-blue-800 to-primary-blue-400 via-primary-blue-400
+        @apply font-black text-transparent bg-clip-text bg-gradient-to-tl from-secondary-500 to-primary-400
     }
 }

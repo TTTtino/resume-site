@@ -1,10 +1,22 @@
-export enum Technology {
-    Python = "Python",
-    HTML = "HTML",
-    JavaScript = "JavaScript",
-    CSS = "CSS",
-    Flask = "Flask",
-    React = "React.js",
-    Next = "Next.js",
-    ChromeExt = "Chrome Extensions"
+import { ReactNode } from "react"
+import { SiCss3, SiTailwindcss, SiBootstrap, SiPython, SiHtml5, SiJavascript, SiFlask, SiReact, SiNextdotjs, SiGooglechrome, SiTypescript } from "react-icons/si"
+
+export interface TechnologyInfo {
+    name: string,
+    icon?: ReactNode
 }
+
+export const technologies: { [name: string]: TechnologyInfo } = {
+    python: { name: "Python", icon: <SiPython /> },
+    html: { name: "HTML", icon: <SiHtml5 /> },
+    javascript: { name: "JavaScript", icon: <SiJavascript /> },
+    typescript: { name: "TypeScript", icon: <SiTypescript /> },
+    css: { name: "CSS", icon: <SiCss3 /> },
+    flask: { name: "Flask", icon: <SiFlask /> },
+    react: { name: "React", icon: <SiReact /> },
+    next: { name: "Next.js", icon: <SiNextdotjs /> },
+    chromeExt: { name: "Chrome Extensions", icon: <SiGooglechrome /> },
+    tailwind: { name: "Tailwind", icon: <SiTailwindcss /> },
+    bootstrap: { name: "Bootstrap", icon: <SiBootstrap /> },
+}
+

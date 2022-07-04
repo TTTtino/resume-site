@@ -31,7 +31,7 @@ type NavElementProps = {
 
 const NavElement = (props: NavElementProps) => {
 
-  return (<li className={`mx-2 bg-white rounded-md  md:w-64 ${props.active ? "text-primary-blue-800 bg-opacity-75 font-extrabold" : "text-white/80 bg-opacity-0 hover:bg-opacity-30"}`}>
+  return (<li className={`mx-2 bg-white rounded-md  md:w-64 ${props.active ? "text-secondary-500 bg-opacity-75 font-extrabold" : "text-white/80 bg-opacity-0 hover:bg-opacity-30"}`}>
     <Link href={props.info.href} className="w-full h-full">
       <a className="block w-full h-full p-3">
         {getNavIcon(props.info.name)}
@@ -49,7 +49,7 @@ type NavbarProps = {
 export const Navbar = (props: NavbarProps) => {
   const router = useRouter()
   return (
-    <div className="sticky top-0 left-0 h-screen shadow-2xl bg-gradient-to-br from-primary-blue-800 to-primary-blue-400 min-w-content">
+    <div className="sticky top-0 left-0 h-screen shadow-2xl bg-gradient-to-br from-secondary-500 to-primary-400 min-w-content">
       <div className="flex flex-col items-center h-full mx-auto">
 
         <div className="flex flex-col items-center mt-2 rounded-md group">

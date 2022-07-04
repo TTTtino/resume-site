@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useSpring, animated, config } from "react-spring";
 import Page from "../components/page";
@@ -9,8 +10,8 @@ import { workExperience, WorkExperience } from "../data/experiencePage";
 import { format } from 'date-fns'
 import { Chrono } from "react-chrono";
 import { RiMapPinFill } from "react-icons/ri"
-import { BiBuildings } from "react-icons/bi"
-
+import { BiBuildings, BiCalendar } from "react-icons/bi"
+import { Pill } from "../components/pill";
 
 
 const ExperienceCard = (props: { data: WorkExperience, index?: number }) => {
@@ -21,11 +22,20 @@ const ExperienceCard = (props: { data: WorkExperience, index?: number }) => {
       </div>
       <div>
         <h3 className="text-xl font-extrabold">{props.data.role} · <span className="font-normal">{props.data.type}</span></h3>
-        <div className="flex items-center w-full gap-1 font-medium"><BiBuildings />{props.data.company}</div>
-        <div className="flex items-center w-full gap-1 font-medium"><RiMapPinFill />{props.data.location}</div>
-        <h5>{`${format(props.data.start, "MMM yyyy")} - ${props.data.end ? format(props.data.end, "MMM yyyy") : "Ongoing"}`}</h5>
+        <div className="flex w-full font-medium ">
+          <Link href={props.data.company.link ? props.data.company.link : "#"}><a className="flex items-center gap-1 rounded-md hover:underline"> <BiBuildings />{props.data.company.name}</a></Link>
+
+        </div>
+        <span className="flex items-center gap-1"> <RiMapPinFill />{props.data.location}</span>
       </div>
     </div>
+    <h5 className="flex items-center gap-1 lg:ml-2"><BiCalendar />{`${format(props.data.start, "MMM yyyy")} - ${props.data.end ? format(props.data.end, "MMM yyyy") : "Ongoing"}`}</h5>
+    {props.data.technologies && <div className="flex flex-wrap gap-2 mt-1">
+      {props.data.technologies?.map((value, index) => {
+        return <Pill text={value.name} icon={value.icon} className="text-white bg-secondary-700" />
+      })}
+    </div>}
+
     {props.data.description &&
       <div><br /><p className="font-light">{props.data?.description}</p>
       </div>}
