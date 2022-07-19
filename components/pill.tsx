@@ -4,10 +4,13 @@ interface PillData {
     icon?: ReactNode
     text: string
     className?: string
+    alwaysExpanded?: boolean
 }
 
 
 export const Pill = (props: PillData) => {
+    const test = "inline-block hidden lg:inline-block group-focus:inline-block"
+    console.log(props.alwaysExpanded)
     return (
         <button className="text-white bg-black rounded-full h-min w-min group">
             <div className={`flex rounded-full p-1 items-center  ${props?.className}`}>
@@ -16,7 +19,7 @@ export const Pill = (props: PillData) => {
                         {props.icon}
                     </div>
                 }
-                <span className="hidden m-1 text-xs whitespace-nowrap lg:inline-block group-focus:inline-block">{props.text}</span>
+                <span className={`m-1 text-xs whitespace-nowrap ${props.alwaysExpanded ? "inline-block" : "hidden lg:inline-block group-focus:inline-block"}`}>{props.text}</span>
             </div>
         </button>)
 }

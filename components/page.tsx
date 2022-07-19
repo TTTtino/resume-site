@@ -1,27 +1,32 @@
 import { NextPage } from "next";
 import { ReactNode } from "react";
-import { Navbar } from "./sidebar";
-import navigationData from "../data/navigation"
+import navigationData from "@data/navigation"
 import Head from "next/head";
-
+import { MobileNavBar, TopNavBar } from "./topNavBar";
 
 interface PageProps {
+    title: string,
+    description?: string
     children?: ReactNode
 }
 
-const Page: NextPage = (props: PageProps) => {
+const Page: NextPage<PageProps> = (props: PageProps) => {
     return (
         <div>
             <Head>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-                    rel="stylesheet"
-                />
+                <title>{props.title} | tinotom.dev</title>
+                <meta name="description" content={`${props.title} page from Tino Tom's portfolio website`} />
             </Head>
-            <div className="flex font-Roboto">
-                <Navbar title="Tino Tom" navigationData={navigationData} />
-                <main className="flex-1 p-4 ">
+            <div className="flex flex-col h-screen text-gray-50">
+                <TopNavBar title="Tino Tom" navigationData={navigationData} />
+                <MobileNavBar title="Tino Tom" navigationData={navigationData} />
+
+                {/* <Navbar title="Tino Tom" navigationData={navigationData} /> */}
+                <main className="h-full p-4 xl:container xl:mx-auto">
                     {props?.children}
+                    <div className="h-24 sm:hidden">
+
+                    </div>
                 </main>
             </div>
         </div>

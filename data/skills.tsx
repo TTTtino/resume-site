@@ -1,5 +1,9 @@
 import { ReactNode } from "react"
-import { SiCss3, SiTailwindcss, SiBootstrap, SiPython, SiHtml5, SiJavascript, SiFlask, SiReact, SiNextdotjs, SiGooglechrome, SiTypescript } from "react-icons/si"
+import {
+    SiCss3, SiTailwindcss, SiBootstrap, SiPython,
+    SiHtml5, SiJavascript, SiFlask, SiReact, SiNextdotjs,
+    SiGooglechrome, SiTypescript, SiCsharp, SiUnity
+} from "react-icons/si"
 
 export interface TechnologyInfo {
     name: string,
@@ -18,5 +22,7 @@ export const technologies: { [name: string]: TechnologyInfo } = {
     chromeExt: { name: "Chrome Extensions", icon: <SiGooglechrome /> },
     tailwind: { name: "Tailwind", icon: <SiTailwindcss /> },
     bootstrap: { name: "Bootstrap", icon: <SiBootstrap /> },
+    cSharp: { name: "C#", icon: <SiCsharp /> },
+    unity: { name: "Unity", icon: <SiUnity /> }
 }
 

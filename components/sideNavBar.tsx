@@ -1,10 +1,10 @@
 import React, { RefObject } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import resumePic from "../public/profilepic.jpg";
+import resumePic from "@public/profilepic.jpg";
 import { IoMdSchool, IoMdHome } from "react-icons/io"
 import { RiSuitcaseFill, RiFileCodeFill, RiLightbulbFlashFill, RiLinkedinBoxFill, RiMailFill } from "react-icons/ri"
-import { NavInfo } from "../data/navigation";
+import { NavInfo } from "@data/navigation";
 import { useRouter } from "next/router";
 
 const getNavIcon = (item: string) => {
@@ -18,6 +18,8 @@ const getNavIcon = (item: string) => {
     case "Skills":
       return <RiLightbulbFlashFill className="inline-block w-8 h-full md:mr-2" />
     case "Projects & Activities":
+      return <RiFileCodeFill className="inline-block w-8 h-full md:mr-2" />
+    case "Contact Me":
       return <RiFileCodeFill className="inline-block w-8 h-full md:mr-2" />
     default:
       break;
@@ -46,7 +48,7 @@ type NavbarProps = {
   navigationData: NavInfo[]
 };
 
-export const Navbar = (props: NavbarProps) => {
+export const SideNavBar = (props: NavbarProps) => {
   const router = useRouter()
   return (
     <div className="sticky top-0 left-0 h-screen shadow-2xl bg-gradient-to-br from-secondary-500 to-primary-400 min-w-content">
@@ -78,7 +80,7 @@ export const Navbar = (props: NavbarProps) => {
                 <span className="hidden md:inline-block">LinkedIn</span>
               </a>
             </Link>
-            <Link href="mailto:tinotom7:outlook.com">
+            <Link href="mailto:tinotom7@outlook.com">
               <a className="p-3 mx-2 bg-white bg-opacity-0 rounded-md text-white/80 hover:bg-opacity-30">
                 <RiMailFill className="inline-block w-8 h-full md:mr-2" />
                 <span className="hidden md:inline-block">Email Me</span>

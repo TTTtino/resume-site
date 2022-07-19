@@ -1,10 +1,11 @@
 import { ReactNode } from "react"
 import { technologies, TechnologyInfo } from "./skills"
-import UoNLogo from "../public/uon-logo.jpg";
-import EFSLogo from "../public/efs-logo.jpg";
-import ArgosLogo from "../public/argos-logo.jpg";
-import TescoLogo from "../public/tesco-logo.jpg";
+import UoNLogo from "@public/uon-logo.jpg";
+import EFSLogo from "@public/efs-logo.jpg";
+import ArgosLogo from "@public/argos-logo.jpg";
+import TescoLogo from "@public/tesco-logo.jpg";
 import Image from "next/image"
+
 
 
 export interface CompanyInfo {
