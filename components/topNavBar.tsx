@@ -102,7 +102,7 @@ export const TopNavBar = (props: NavbarProps) => {
             <div className={`flex flex-row justify-between w-full mx-auto`}>
 
 
-                <div className="m-5 text-6xl">
+                <div className="mt-5 ml-5 mr-1 text-6xl">
                     <div className="font-bold md:hidden xl:block">Hi, I'm <span className=" highlight-blue-gradient">Tino</span></div>
                     <div className="hidden font-bold md:block xl:hidden"><span className=" highlight-blue-gradient">Tino</span></div>
                     <div className="text-sm font-normal text-end">An MSci <span className="highlight-blue-gradient">Computer Science</span> Student</div>

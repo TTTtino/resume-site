@@ -22,7 +22,7 @@ const Page: NextPage<PageProps> = (props: PageProps) => {
                 <MobileNavBar title="Tino Tom" navigationData={navigationData} />
 
                 {/* <Navbar title="Tino Tom" navigationData={navigationData} /> */}
-                <main className="h-full p-4 xl:container xl:mx-auto">
+                <main className="h-full px-4 xl:container xl:mx-auto">
                     {props?.children}
                     <div className="h-24 sm:hidden">
 

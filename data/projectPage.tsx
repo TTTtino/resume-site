@@ -1,60 +1,69 @@
-import { StaticImageData } from "next/image"
-import { technologies, TechnologyInfo } from "@data/skills"
-import eidolonSC1 from "@public/projects/eidolon/Screenshot\ (1).png"
-import eidolonSC2 from "@public/projects/eidolon/Screenshot\ (2).png"
-import eidolonSC3 from "@public/projects/eidolon/Screenshot\ (3).png"
+import fs from 'fs'
 import { ReactNode } from "react"
+import { join } from "path"
+import matter from 'gray-matter'
+import remarkMdx from 'remark-mdx'
+import { remark } from 'remark'
 
 export interface ProjectData {
-    slug: string,
-    name: string,
-    screenshots: StaticImageData[],
+    slug?: string,
+    title: string,
+    screenshots: string[],
     shortDescription: string,
-    description: ReactNode,
     inProgress: boolean,
-    technologies: TechnologyInfo[],
+    technologies: string[],
     year: Number
 }
 
-export const projects: ProjectData[] = [
-    {
-        slug: "eidolon-game",
-        name: "Eidolon",
-        screenshots: [eidolonSC1, eidolonSC2, eidolonSC3],
-        shortDescription: "Complete challenges and defeat enemies in this short 2D platformer",
-        description:
-            <div>
-                A very short 2D platformer where you must listen (or not?) to an ancient weapon and complete it's trials.
-                <ul>
-                    <li>Complete Puzzles</li>
-                    <li>Defeat Enemies</li>
-                    <li>Manoeuvre through difficult terrain and obstacles</li>
-                </ul>
-            </div>,
-        inProgress: false,
-        technologies: [technologies.unity, technologies.cSharp],
-        year: 2022
-    },
-    {
-        slug: "test-project",
-        name: "TestProjectA",
-        screenshots: [],
-        shortDescription: "Blach blah blah",
-        description: "string",
-        inProgress: true,
-        technologies: [],
-        year: 0
-    },
 
-]
+const projectsDirectory = join(process.cwd(), '_projects')
 
-export const getAllProjectPaths = () => {
-    return projects.map(
-        (val) => {
-            return {
-                params: {
-                    slug: `${val.slug}`,
-                },
-            }
-        })
+
+
+export const getProjectBySlug = (slug: string) => {
+    const fullPath = join(projectsDirectory, `${slug}.mdx`)
+    const fileContents = fs.readFileSync(fullPath, 'utf-8');
+    const { data, content } = matter(fileContents);
+    console.log({ data, content })
+    return { data, content };
 }
+
+export const getProjectBySlugTest = (slug: string) => {
+    const fullPath = join(projectsDirectory, `${slug}.mdx`)
+    const fileContents = fs.readFileSync(fullPath, 'utf-8');
+    const t = remark()
+        .use(remarkMdx)
+        .parse(fileContents)
+    console.log
+    return t;
+}
+
+
+export const getProjectData = (filePath: string) => {
+    const slug = filePath.replace(/\.mdx?$/, "");
+    // get the front matter data and content
+    const { data, content } = getProjectBySlug(slug);
+    data.slug = slug
+
+    return data as ProjectData
+}
+
+
+export const getProjectSlugs = () => {
+    const paths = fs.readdirSync(projectsDirectory).filter((path) => /\.mdx?$/.test(path))
+
+    const slugs = paths.map((path) => path.replace(/\.mdx?$/, ""))
+    return slugs
+}
+
+export const getAllProjects = () => {
+    // add paths for getting all projects 
+    const filePaths = fs.readdirSync(projectsDirectory).filter((path) => /\.mdx?$/.test(path));
+    // get the projects from the filepaths with the needed fields sorted by date
+    const projects = filePaths.map((filePath) => getProjectData(filePath)).sort((post1, post2) => post1.year < post2.year ? 1 : -1);
+    // return the available post
+    return projects;
+}
+
+
+

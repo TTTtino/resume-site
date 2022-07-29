@@ -5,6 +5,7 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./_projects/**/*.mdx",
   ],
   theme: {
 
@@ -40,15 +41,15 @@ module.exports = {
         },
         "dark-slate": {
           50: '#0f172a',
-          100: '#0f172a',
-          200: '#0e1526',
-          300: '#0c1222',
-          400: '#0b101d',
-          500: '#090e19',
-          600: '#080c15',
-          700: '#060911',
-          800: '#04070d',
-          900: '#030508',
+          100: '#0e1526',
+          200: '#0c1222',
+          300: '#0b101d',
+          400: '#090e19',
+          500: '#080c15',
+          600: '#060911',
+          700: '#04070d',
+          800: '#030508',
+          900: '#010204'
         }
       },
       fontFamily: {
@@ -59,5 +60,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
