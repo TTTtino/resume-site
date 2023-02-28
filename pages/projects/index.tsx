@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
 import Page from "@components/page";
-import { projects, ProjectData, getAllProjects } from "@data/projectPage";
+import { ProjectData, getAllProjects } from "@data/projectPage";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";

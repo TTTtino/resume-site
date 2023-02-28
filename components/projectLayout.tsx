@@ -9,9 +9,9 @@ import { technologies } from "@data/skills"
 import Link from "next/link"
 
 import WIPProjectThumbnail from "@public/projects/wip-project.png"
-import { FaItchIo } from "react-icons/fa"
+import { FaItchIo, FaLink } from "react-icons/fa"
 
-const components = { FaItchIo, Link }
+const components = { FaItchIo, Link, FaLink }
 
 interface ProjectPageProps {
     source: MDXRemoteSerializeResult,

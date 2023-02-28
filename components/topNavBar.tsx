@@ -69,7 +69,7 @@ export const MobileNavBar = (props: NavbarProps) => {
                 <div className="sticky top-0 z-10 flex justify-center w-screen pt-4 text-6xl text-center from-dark-slate-700/60 via-dark-slate-700/50 bg-gradient-to-b md:hidden">
                     <div className=" w-fit">
                         <div className="font-bold">Hi, I'm <span className=" highlight-blue-gradient">Tino</span></div>
-                        <div className="text-sm font-normal text-end">An MSci <span className="highlight-blue-gradient">Computer Science</span> Student</div>
+                        <div className="text-sm font-normal text-center">An MSci <span className="highlight-blue-gradient">Computer Science</span> Student</div>
                     </div>
                 </div>
             }
