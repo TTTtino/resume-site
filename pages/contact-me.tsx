@@ -8,8 +8,8 @@ import Page from "@components/page";
 const Projects: NextPage = () => {
     return (
         <Page title="Projects">
-            <div className="h-[120vh] border-red-600 border">
-                Contact Me
+            <div className="h-full flex justify-center items-center">
+                Work in Progress
             </div>
         </Page>
     );
