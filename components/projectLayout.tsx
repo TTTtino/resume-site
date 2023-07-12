@@ -24,7 +24,7 @@ export const ProjectLayout = (props: ProjectPageProps) => {
     return (
         <div className='p-5 '>
             <h1 className="text-5xl font-bold">{props.meta.title}</h1>
-            <h2 className="text-xl font-semibold">{props.meta.inProgress ? "In Development" : props.meta.year}</h2>
+            <h2 className="text-xl font-semibold">{props.meta.inProgress ? "In Development" : (props.meta.year).toString()}</h2>
             <div>
                 {props.meta.technologies &&
                     <div className="flex flex-wrap gap-2 mt-1">
