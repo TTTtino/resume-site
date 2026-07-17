@@ -79,29 +79,6 @@
     opacity: 0.7;
   }
 
-  .nav-link {
-    @apply relative inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors duration-200;
-  }
-
-  .nav-link:hover {
-    @apply text-primary-200;
-  }
-
-  .nav-link-active {
-    @apply text-primary-200;
-  }
-
-  .nav-link-active::after {
-    content: "";
-    position: absolute;
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.2rem;
-    height: 2px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #00aeef, #4c59ad);
-  }
-
   .page-title {
     @apply font-display text-4xl font-semibold tracking-tight sm:text-5xl;
   }

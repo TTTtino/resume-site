@@ -1,6 +1,7 @@
 import Page from '@components/page'
 import Timeline from '@components/timeline'
 import { workExperience, WorkExperience } from '@data/experiencePage'
+import { qualifications } from '@data/qualificationsPage'
 import { format } from 'date-fns'
 import { RiMapPinFill } from 'react-icons/ri'
 import { BiBuildings, BiCalendar } from 'react-icons/bi'
@@ -70,22 +71,74 @@ const ExperienceCard = (props: { data: WorkExperience }) => {
   )
 }
 
-const ExperiencePage = () => {
+const BackgroundPage = () => {
   return (
-    <Page title="Experience">
+    <Page
+      title="Background"
+      description="Experience and qualifications from Tino Tom's portfolio website"
+    >
       <div className="py-2">
-        <p className="section-kicker">Career</p>
-        <h1 className="page-title mb-10">Experience</h1>
-        <Timeline
-          items={workExperience.map((value, index) => ({
-            id: `${value.company.name}-${value.role}-${index}`,
-            title: format(value.start, 'MMM yyyy'),
-            content: <ExperienceCard data={value} />,
-          }))}
-        />
+        <p className="section-kicker">Career & education</p>
+        <h1 className="page-title mb-10">Background</h1>
+
+        <section className="mb-16">
+          <h2 className="mb-8 font-display text-2xl font-semibold tracking-tight">
+            Experience
+          </h2>
+          <Timeline
+            items={workExperience.map((value, index) => ({
+              id: `${value.company.name}-${value.role}-${index}`,
+              title: format(value.start, 'MMM yyyy'),
+              content: <ExperienceCard data={value} />,
+            }))}
+          />
+        </section>
+
+        <section>
+          <h2 className="mb-8 font-display text-2xl font-semibold tracking-tight">
+            Qualifications
+          </h2>
+          <Timeline
+            items={qualifications.map((value, index) => ({
+              id: `${value.name}-${index}`,
+              title: format(value.date, 'MMM yyyy'),
+              content: (
+                <div className="w-full py-1">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-white/15 bg-dark-slate-50">
+                      {value.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-display text-xl font-semibold tracking-tight">
+                        {value.name}
+                      </h3>
+                      <div className="mt-1 flex items-center gap-1.5 font-medium text-slate-200">
+                        <BiBuildings className="text-primary-300" />
+                        {value.institution}
+                      </div>
+                      <span className="mt-1 flex items-center gap-1.5 text-slate-300">
+                        <RiMapPinFill className="text-primary-300" />
+                        {value.location}
+                      </span>
+                      <p className="mt-1 flex items-center gap-1.5 text-slate-400">
+                        <BiCalendar className="text-primary-300" />
+                        {format(value.date, 'MMM yyyy')}
+                      </p>
+                    </div>
+                  </div>
+                  {value.grades && (
+                    <div className="mt-4 leading-relaxed text-slate-300">
+                      {value.grades}
+                    </div>
+                  )}
+                </div>
+              ),
+            }))}
+          />
+        </section>
       </div>
     </Page>
   )
 }
 
-export default ExperiencePage
+export default BackgroundPage

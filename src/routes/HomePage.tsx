@@ -43,10 +43,10 @@ const HomePage = () => {
             className="mt-8 flex flex-wrap gap-3"
           >
             <Link
-              to="/experience"
+              to="/background"
               className="inline-flex items-center rounded-lg bg-secondary-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-secondary-400"
             >
-              View experience
+              View background
             </Link>
             <Link
               to="/contact-me"

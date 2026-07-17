@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import * as Tooltip from '@radix-ui/react-tooltip'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { BsChevronUp } from 'react-icons/bs'
 import { NavInfo } from '@data/navigation'
@@ -17,40 +18,52 @@ const isActivePath = (pathname: string, href: string) => {
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-const NavElement = ({
-  info,
-  active,
-  onNavigate,
-  variant = 'desktop',
-}: NavElementProps) => {
-  if (variant === 'mobile') {
-    return (
-      <li className="w-full">
+const DesktopNavLink = ({ info, active }: NavElementProps) => {
+  return (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
         <Link
           to={info.href}
-          onClick={onNavigate}
-          className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base transition-colors ${
+          aria-label={info.name}
+          aria-current={active ? 'page' : undefined}
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
             active
-              ? 'bg-primary-400/15 font-semibold text-primary-200 ring-1 ring-primary-400/40'
-              : 'bg-dark-slate-50/80 text-slate-100 ring-1 ring-white/10 hover:bg-dark-slate-50 hover:text-primary-200'
+              ? 'bg-primary-400/15 text-primary-200 ring-1 ring-primary-400/45'
+              : 'text-slate-200 hover:bg-white/5 hover:text-primary-200'
           }`}
         >
-          <span className="flex h-8 w-8 items-center justify-center text-primary-300">
+          <span className="flex h-5 w-5 items-center justify-center [&>svg]:h-5 [&>svg]:w-5">
             {info.icon}
           </span>
-          <span>{info.name}</span>
         </Link>
-      </li>
-    )
-  }
+      </Tooltip.Trigger>
+      <Tooltip.Portal>
+        <Tooltip.Content
+          side="bottom"
+          sideOffset={8}
+          className="z-50 select-none rounded-md border border-white/10 bg-dark-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-100 shadow-glow"
+        >
+          {info.name}
+          <Tooltip.Arrow className="fill-dark-slate-50" />
+        </Tooltip.Content>
+      </Tooltip.Portal>
+    </Tooltip.Root>
+  )
+}
 
+const MobileNavLink = ({ info, active, onNavigate }: NavElementProps) => {
   return (
-    <li>
+    <li className="w-full">
       <Link
         to={info.href}
-        className={`nav-link ${active ? 'nav-link-active' : ''}`}
+        onClick={onNavigate}
+        className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base transition-colors ${
+          active
+            ? 'bg-primary-400/15 font-semibold text-primary-200 ring-1 ring-primary-400/40'
+            : 'bg-dark-slate-50/80 text-slate-100 ring-1 ring-white/10 hover:bg-dark-slate-50 hover:text-primary-200'
+        }`}
       >
-        <span className="hidden h-4 w-4 items-center justify-center lg:inline-flex [&>svg]:h-4 [&>svg]:w-4">
+        <span className="flex h-8 w-8 items-center justify-center text-primary-300 [&>svg]:h-6 [&>svg]:w-6">
           {info.icon}
         </span>
         <span>{info.name}</span>
@@ -87,7 +100,6 @@ export const MobileNavBar = (props: NavbarProps) => {
           </p>
         </Link>
       </header>
-      {/* Spacer so content clears the fixed mobile brand header */}
       <div className="h-[4.75rem]" aria-hidden="true" />
 
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20">
@@ -104,10 +116,9 @@ export const MobileNavBar = (props: NavbarProps) => {
                   className="flex flex-col gap-2 overflow-hidden px-3 pt-3"
                 >
                   {props.navigationData.map((item) => (
-                    <NavElement
+                    <MobileNavLink
                       key={item.href}
                       info={item}
-                      variant="mobile"
                       active={isActivePath(pathname, item.href)}
                       onNavigate={() => setNavOpen(false)}
                     />
@@ -147,7 +158,7 @@ export const TopNavBar = (props: NavbarProps) => {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-30 hidden border-b border-white/5 bg-dark-slate-200/90 backdrop-blur-xl md:block">
-        <div className="mx-auto flex max-w-6xl items-start justify-between gap-6 px-6 py-4 lg:px-8">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4 lg:px-8">
           <Link to="/" className="group min-w-0 shrink">
             <div className="font-display text-3xl font-semibold tracking-tight xl:text-4xl">
               <span className="hidden xl:inline">
@@ -157,28 +168,30 @@ export const TopNavBar = (props: NavbarProps) => {
                 <span className="highlight-blue-gradient">Tino</span>
               </span>
             </div>
-            <p className="mt-1 max-w-xs text-right text-xs text-slate-300 xl:max-w-none xl:text-sm">
+            <p className="mt-1 text-xs text-slate-300 xl:text-sm">
               Frontend Engineer · First Class{' '}
               <span className="highlight-blue-gradient">Computer Science</span>{' '}
               Graduate
             </p>
           </Link>
 
-          <nav aria-label="Primary">
-            <ul className="flex flex-wrap items-center justify-end gap-1">
-              {props.navigationData.map((item) => (
-                <NavElement
-                  key={item.href}
-                  info={item}
-                  active={isActivePath(pathname, item.href)}
-                />
-              ))}
-            </ul>
-          </nav>
+          <Tooltip.Provider delayDuration={200} skipDelayDuration={120}>
+            <nav aria-label="Primary">
+              <ul className="flex flex-nowrap items-center justify-end gap-1">
+                {props.navigationData.map((item) => (
+                  <li key={item.href}>
+                    <DesktopNavLink
+                      info={item}
+                      active={isActivePath(pathname, item.href)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Tooltip.Provider>
         </div>
       </header>
-      {/* Spacer so content clears the fixed desktop header */}
-      <div className="hidden h-[6.5rem] md:block xl:h-[7.25rem]" aria-hidden="true" />
+      <div className="hidden h-[5.75rem] md:block xl:h-[6.5rem]" aria-hidden="true" />
     </>
   )
 }
