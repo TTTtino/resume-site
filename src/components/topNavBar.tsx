@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { BsArrowUpCircle } from 'react-icons/bs'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { BsChevronUp } from 'react-icons/bs'
 import { NavInfo } from '@data/navigation'
+import { springSnappy } from '@lib/motion'
 
 type NavElementProps = {
   info: NavInfo
   active: boolean
-  hidden?: boolean
+  onNavigate?: () => void
+  variant?: 'desktop' | 'mobile'
 }
 
 const isActivePath = (pathname: string, href: string) => {
@@ -14,17 +18,55 @@ const isActivePath = (pathname: string, href: string) => {
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-const NavElement = (props: NavElementProps) => {
+const DesktopNavLink = ({ info, active }: NavElementProps) => {
   return (
-    <li
-      className={`h-fit mx-2 decoration-2 transition-all underline-offset-4  ${props.hidden ? 'hidden' : 'block '} ${props.active ? 'text-primary-200 bg-opacity-75 font-extrabold underline' : 'text-white hover:text-primary-50 hover:scale-110 hover:underline'}`}
-    >
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
+        <Link
+          to={info.href}
+          aria-label={info.name}
+          aria-current={active ? 'page' : undefined}
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
+            active
+              ? 'bg-primary-400/15 text-primary-200 ring-1 ring-primary-400/45'
+              : 'text-slate-200 hover:bg-white/5 hover:text-primary-200'
+          }`}
+        >
+          <span className="flex h-5 w-5 items-center justify-center [&>svg]:h-5 [&>svg]:w-5">
+            {info.icon}
+          </span>
+        </Link>
+      </Tooltip.Trigger>
+      <Tooltip.Portal>
+        <Tooltip.Content
+          side="bottom"
+          sideOffset={8}
+          className="z-50 select-none rounded-md border border-white/10 bg-dark-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-100 shadow-glow"
+        >
+          {info.name}
+          <Tooltip.Arrow className="fill-dark-slate-50" />
+        </Tooltip.Content>
+      </Tooltip.Portal>
+    </Tooltip.Root>
+  )
+}
+
+const MobileNavLink = ({ info, active, onNavigate }: NavElementProps) => {
+  return (
+    <li className="w-full">
       <Link
-        to={props.info.href}
-        className="flex flex-row items-center w-full h-full p-3 text-center sm:flex-col lg:flex-row"
+        to={info.href}
+        onClick={onNavigate}
+        className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base transition-colors ${
+          active
+            ? 'bg-primary-400/15 font-semibold text-primary-200 ring-1 ring-primary-400/40'
+            : 'bg-dark-slate-50/80 text-slate-100 ring-1 ring-white/10 hover:bg-dark-slate-50 hover:text-primary-200'
+        }`}
       >
-        {props.info.icon}
-        <span className="block ml-2 sm:ml-0 lg:ml-2">{props.info.name}</span>
+        <span className="flex h-8 w-8 items-center justify-center text-primary-300 [&>svg]:h-6 [&>svg]:w-6">
+          {info.icon}
+        </span>
+        <span>{info.name}</span>
       </Link>
     </li>
   )
@@ -35,65 +77,75 @@ type NavbarProps = {
   navigationData: NavInfo[]
 }
 
-const MobileNavElement = (props: NavElementProps) => {
-  return (
-    <li
-      className={`h-fit mx-2 w-full decoration-2 transition-all underline-offset-4 rounded-md ${props.hidden ? 'hidden' : 'block '} ${props.active ? 'bg-white text-secondary-500 font-extrabold underline ' : 'bg-white text-secondary-500 hover:text-secondary-700 hover:scale-110 hover:underline'}`}
-    >
-      <Link
-        to={props.info.href}
-        className="flex flex-row items-center w-full h-full p-2 text-center sm:flex-col lg:flex-row"
-      >
-        {props.info.icon}
-        <span className="block ml-2 sm:ml-0 lg:ml-2">{props.info.name}</span>
-      </Link>
-    </li>
-  )
-}
-
 export const MobileNavBar = (props: NavbarProps) => {
   const [navOpen, setNavOpen] = useState(false)
   const { pathname } = useLocation()
+  const reduceMotion = useReducedMotion()
+  const [menuPath, setMenuPath] = useState(pathname)
+
+  if (menuPath !== pathname) {
+    setMenuPath(pathname)
+    if (navOpen) setNavOpen(false)
+  }
 
   return (
-    <div>
-      {pathname !== '/' && (
-        <div className="sticky top-0 z-10 flex justify-center w-screen pt-4 text-6xl text-center from-dark-slate-700/60 via-dark-slate-700/50 bg-gradient-to-b md:hidden">
-          <div className=" w-fit">
-            <div className="font-bold">
-              Hi, I'm <span className=" highlight-blue-gradient">Tino</span>
-            </div>
-            <div className="text-sm font-normal text-center">
-              Frontend Engineer · First Class{' '}
-              <span className="highlight-blue-gradient">Computer Science</span>{' '}
-              Graduate
-            </div>
+    <div className="md:hidden">
+      <header className="fixed inset-x-0 top-0 z-30 border-b border-white/5 bg-dark-slate-200/90 px-4 py-3 backdrop-blur-xl">
+        <Link to="/" className="block">
+          <div className="font-display text-2xl font-semibold tracking-tight">
+            <span className="highlight-blue-gradient">Tino Tom</span>
           </div>
-        </div>
-      )}
+          <p className="mt-0.5 text-xs text-slate-300">
+            Frontend Engineer · First Class Computer Science Graduate
+          </p>
+        </Link>
+      </header>
+      <div className="h-[4.75rem]" aria-hidden="true" />
 
-      <div className="fixed bottom-0 z-10 block w-screen transition shadow-2xl shadow-dark-slate-700 md:hidden bg-gradient-to-t from-dark-slate-700/90 via-dark-slate-700/70 to-dark-slate-700/10 ">
-        <div className="flex flex-col items-center w-full p-2 mx-auto transition-all">
-          <ul
-            className={`flex flex-col justify-end items-center gap-2 mt-2 flex-grow transition-all ${navOpen ? 'max-h-96' : 'max-h-0 translate-y-[100vh]'} `}
-          >
-            {props.navigationData.map((item, index) => {
-              return (
-                <MobileNavElement
-                  key={index}
-                  info={item}
-                  active={isActivePath(pathname, item.href)}
-                />
-              )
-            })}
-          </ul>
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20">
+        <div className="pointer-events-auto mx-auto max-w-lg px-3 pb-3">
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-dark-slate-50/95 shadow-glow backdrop-blur-xl">
+            <AnimatePresence initial={false}>
+              {navOpen && (
+                <motion.ul
+                  key="mobile-nav-list"
+                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                  transition={springSnappy}
+                  className="flex flex-col gap-2 overflow-hidden px-3 pt-3"
+                >
+                  {props.navigationData.map((item) => (
+                    <MobileNavLink
+                      key={item.href}
+                      info={item}
+                      active={isActivePath(pathname, item.href)}
+                      onNavigate={() => setNavOpen(false)}
+                    />
+                  ))}
+                </motion.ul>
+              )}
+            </AnimatePresence>
 
-          <BsArrowUpCircle
-            className={`w-8 h-8 m-5 ${navOpen ? '-scale-100' : 'scale-100'} transition-transform`}
-            onClick={() => {
-              setNavOpen(!navOpen)
-            }}
-          />
+            <button
+              type="button"
+              aria-expanded={navOpen}
+              aria-label={navOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
+              onClick={() => setNavOpen((open) => !open)}
+            >
+              <span className="text-sm font-medium text-slate-200">
+                {navOpen ? 'Close menu' : 'Menu'}
+              </span>
+              <motion.span
+                animate={{ rotate: navOpen ? 180 : 0 }}
+                transition={springSnappy}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary-500 text-white"
+              >
+                <BsChevronUp className="h-5 w-5" />
+              </motion.span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -104,34 +156,42 @@ export const TopNavBar = (props: NavbarProps) => {
   const { pathname } = useLocation()
 
   return (
-    <div className="sticky top-0 z-10 hidden w-screen from-black/60 via-black/50 bg-gradient-to-b md:block">
-      <div className={`flex flex-row justify-between w-full mx-auto`}>
-        <div className="mt-5 ml-5 mr-1 text-6xl">
-          <div className="font-bold md:hidden xl:block">
-            Hi, I'm <span className=" highlight-blue-gradient">Tino</span>
-          </div>
-          <div className="hidden font-bold md:block xl:hidden">
-            <span className=" highlight-blue-gradient">Tino</span>
-          </div>
-          <div className="text-sm font-normal text-end">
-            Frontend Engineer · First Class{' '}
-            <span className="highlight-blue-gradient">Computer Science</span>{' '}
-            Graduate
-          </div>
-        </div>
+    <>
+      <header className="fixed inset-x-0 top-0 z-30 hidden border-b border-white/5 bg-dark-slate-200/90 backdrop-blur-xl md:block">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4 lg:px-8">
+          <Link to="/" className="group min-w-0 shrink">
+            <div className="font-display text-3xl font-semibold tracking-tight xl:text-4xl">
+              <span className="hidden xl:inline">
+                Hi, I&apos;m <span className="highlight-blue-gradient">Tino</span>
+              </span>
+              <span className="xl:hidden">
+                <span className="highlight-blue-gradient">Tino</span>
+              </span>
+            </div>
+            <p className="mt-1 text-xs text-slate-300 xl:text-sm">
+              Frontend Engineer · First Class{' '}
+              <span className="highlight-blue-gradient">Computer Science</span>{' '}
+              Graduate
+            </p>
+          </Link>
 
-        <ul className="flex justify-end gap-2 mt-2">
-          {props.navigationData.map((item, index) => {
-            return (
-              <NavElement
-                key={index}
-                info={item}
-                active={isActivePath(pathname, item.href)}
-              />
-            )
-          })}
-        </ul>
-      </div>
-    </div>
+          <Tooltip.Provider delayDuration={200} skipDelayDuration={120}>
+            <nav aria-label="Primary">
+              <ul className="flex flex-nowrap items-center justify-end gap-1">
+                {props.navigationData.map((item) => (
+                  <li key={item.href}>
+                    <DesktopNavLink
+                      info={item}
+                      active={isActivePath(pathname, item.href)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Tooltip.Provider>
+        </div>
+      </header>
+      <div className="hidden h-[5.75rem] md:block xl:h-[6.5rem]" aria-hidden="true" />
+    </>
   )
 }

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
-import { RiSuitcaseFill, RiCodeBoxFill } from 'react-icons/ri'
-import { IoMdSchool, IoMdHome, IoMdMail } from 'react-icons/io'
+import { RiCodeBoxFill } from 'react-icons/ri'
+import { IoMdHome, IoMdMail } from 'react-icons/io'
 import { FaTools } from 'react-icons/fa'
+import { MdWorkHistory } from 'react-icons/md'
 
 export interface NavInfo {
   name: string
@@ -13,31 +14,26 @@ export default [
   {
     name: 'Home',
     href: '/',
-    icon: <IoMdHome className="w-8 h-full " />,
+    icon: <IoMdHome className="h-5 w-5" />,
   },
   {
-    name: 'Experience',
-    href: '/experience',
-    icon: <RiSuitcaseFill className="w-8 h-full " />,
+    name: 'Background',
+    href: '/background',
+    icon: <MdWorkHistory className="h-5 w-5" />,
   },
   {
     name: 'Skills',
     href: '/skills',
-    icon: <FaTools className="w-7 h-full " />,
-  },
-  {
-    name: 'Qualifications',
-    href: '/qualifications',
-    icon: <IoMdSchool className="w-8 h-full " />,
+    icon: <FaTools className="h-5 w-5" />,
   },
   {
     name: 'Projects',
     href: '/projects',
-    icon: <RiCodeBoxFill className="w-8 h-full " />,
+    icon: <RiCodeBoxFill className="h-5 w-5" />,
   },
   {
     name: 'Contact Me',
     href: '/contact-me',
-    icon: <IoMdMail className="w-8 h-full " />,
+    icon: <IoMdMail className="h-5 w-5" />,
   },
 ]

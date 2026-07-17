@@ -1,9 +1,11 @@
 import { FormEvent, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { RiLinkedinBoxFill } from 'react-icons/ri'
 import Page from '@components/page'
 import { FORMSPREE_FORM_ID } from '../api/contact'
 import { useSubmitContact } from '../hooks/useSubmitContact'
+import { easeOutSoft } from '@lib/motion'
 
 interface ContactFormState {
   name: string
@@ -21,11 +23,15 @@ const initialFormState: ContactFormState = {
   company: '',
 }
 
+const fieldClassName =
+  'rounded-lg border border-secondary-400/40 bg-dark-slate-50/80 px-3 py-2.5 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-400/40 disabled:opacity-60'
+
 const ContactMePage = () => {
   const formId = useId()
   const [form, setForm] = useState<ContactFormState>(initialFormState)
   const [validationError, setValidationError] = useState<string | null>(null)
   const submitContact = useSubmitContact()
+  const reduceMotion = useReducedMotion()
 
   const updateField =
     (field: keyof ContactFormState) =>
@@ -54,7 +60,9 @@ const ContactMePage = () => {
     }
 
     if (message.length < 20) {
-      setValidationError('Please write a slightly longer message (at least 20 characters).')
+      setValidationError(
+        'Please write a slightly longer message (at least 20 characters).',
+      )
       return
     }
 
@@ -91,21 +99,27 @@ const ContactMePage = () => {
       title="Contact Me"
       description="Send a message to Tino Tom through the portfolio contact form."
     >
-      <div className="flex justify-center px-2 py-10 sm:px-4">
-        <div className="w-full max-w-xl">
-          <h1 className="mb-3 text-5xl font-bold">Contact</h1>
-          <p className="mb-8 text-lg font-light text-gray-200">
-            Send a message and I’ll get back to you by email. Your details stay
-            private — nothing sensitive is shown on this page.
-          </p>
+      <div className="mx-auto max-w-xl py-2">
+        <p className="section-kicker">Get in touch</p>
+        <h1 className="page-title mb-3">Contact</h1>
+        <p className="mb-8 text-lg font-light text-slate-300">
+          Send a message and I’ll get back to you by email. Your details stay
+          private — nothing sensitive is shown on this page.
+        </p>
 
+        <AnimatePresence mode="wait">
           {showSuccess ? (
-            <div
-              className="mb-6 rounded-md border border-primary-400/40 bg-secondary-900/40 p-4"
+            <motion.div
+              key="success"
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0 }}
+              transition={easeOutSoft}
+              className="mb-6 rounded-xl border border-primary-400/40 bg-secondary-900/40 p-5"
               role="status"
             >
               <p className="font-semibold text-primary-200">Message sent.</p>
-              <p className="mt-1 font-light text-gray-200">
+              <p className="mt-1 font-light text-slate-200">
                 Thanks for reaching out — I’ll reply as soon as I can.
               </p>
               <button
@@ -115,9 +129,18 @@ const ContactMePage = () => {
               >
                 Send another message
               </button>
-            </div>
+            </motion.div>
           ) : (
-            <form className="flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
+            <motion.form
+              key="form"
+              className="flex flex-col gap-5"
+              onSubmit={handleSubmit}
+              noValidate
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0 }}
+              transition={easeOutSoft}
+            >
               <div className="flex flex-col gap-2">
                 <label htmlFor={`${formId}-name`} className="font-semibold">
                   Name
@@ -131,7 +154,7 @@ const ContactMePage = () => {
                   value={form.name}
                   onChange={updateField('name')}
                   disabled={isSubmitting}
-                  className="rounded-md border border-secondary-400/50 bg-dark-slate-50 px-3 py-2 outline-none ring-primary-400 focus:ring-2 disabled:opacity-60"
+                  className={fieldClassName}
                 />
               </div>
 
@@ -148,13 +171,14 @@ const ContactMePage = () => {
                   value={form.email}
                   onChange={updateField('email')}
                   disabled={isSubmitting}
-                  className="rounded-md border border-secondary-400/50 bg-dark-slate-50 px-3 py-2 outline-none ring-primary-400 focus:ring-2 disabled:opacity-60"
+                  className={fieldClassName}
                 />
               </div>
 
               <div className="flex flex-col gap-2">
                 <label htmlFor={`${formId}-subject`} className="font-semibold">
-                  Subject <span className="font-normal text-gray-400">(optional)</span>
+                  Subject{' '}
+                  <span className="font-normal text-slate-400">(optional)</span>
                 </label>
                 <input
                   id={`${formId}-subject`}
@@ -163,7 +187,7 @@ const ContactMePage = () => {
                   value={form.subject}
                   onChange={updateField('subject')}
                   disabled={isSubmitting}
-                  className="rounded-md border border-secondary-400/50 bg-dark-slate-50 px-3 py-2 outline-none ring-primary-400 focus:ring-2 disabled:opacity-60"
+                  className={fieldClassName}
                 />
               </div>
 
@@ -179,12 +203,14 @@ const ContactMePage = () => {
                   value={form.message}
                   onChange={updateField('message')}
                   disabled={isSubmitting}
-                  className="resize-y rounded-md border border-secondary-400/50 bg-dark-slate-50 px-3 py-2 outline-none ring-primary-400 focus:ring-2 disabled:opacity-60"
+                  className={`resize-y ${fieldClassName}`}
                 />
               </div>
 
-              {/* Honeypot — hidden from people, filled by many bots */}
-              <div className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
+              <div
+                className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden"
+                aria-hidden="true"
+              >
                 <label htmlFor={`${formId}-company`}>Company</label>
                 <input
                   id={`${formId}-company`}
@@ -198,40 +224,45 @@ const ContactMePage = () => {
               </div>
 
               {errorMessage && (
-                <p className="text-sm font-semibold text-red-300" role="alert">
+                <motion.p
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-sm font-semibold text-red-300"
+                  role="alert"
+                >
                   {errorMessage}
-                </p>
+                </motion.p>
               )}
 
               <button
                 type="submit"
                 disabled={isSubmitting || !FORMSPREE_FORM_ID}
-                className="rounded-md bg-secondary-500 px-5 py-3 font-semibold text-white transition hover:bg-secondary-400 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-lg bg-secondary-500 px-5 py-3 font-semibold text-white transition hover:bg-secondary-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? 'Sending…' : 'Send message'}
               </button>
-            </form>
+            </motion.form>
           )}
+        </AnimatePresence>
 
-          <div className="mt-10 border-t border-secondary-400/30 pt-6">
-            <p className="mb-3 font-light text-gray-300">Prefer LinkedIn?</p>
-            <a
-              href="https://www.linkedin.com/in/tino-tom/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-semibold text-primary-300 underline-offset-4 hover:underline"
+        <div className="mt-10 border-t border-secondary-400/30 pt-6">
+          <p className="mb-3 font-light text-slate-300">Prefer LinkedIn?</p>
+          <a
+            href="https://www.linkedin.com/in/tino-tom/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-semibold text-primary-300 underline-offset-4 hover:underline"
+          >
+            <RiLinkedinBoxFill className="h-5 w-5" />
+            linkedin.com/in/tino-tom
+          </a>
+          <div className="mt-4">
+            <Link
+              to="/"
+              className="text-sm font-semibold text-slate-400 underline-offset-4 hover:text-slate-200 hover:underline"
             >
-              <RiLinkedinBoxFill className="h-5 w-5" />
-              linkedin.com/in/tino-tom
-            </a>
-            <div className="mt-4">
-              <Link
-                to="/"
-                className="text-sm font-semibold text-gray-400 underline-offset-4 hover:text-gray-200 hover:underline"
-              >
-                Back to home
-              </Link>
-            </div>
+              Back to home
+            </Link>
           </div>
         </div>
       </div>
