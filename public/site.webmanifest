@@ -1,0 +1,21 @@
+{
+  "name": "Tino Tom — tinotom.dev",
+  "short_name": "tinotom.dev",
+  "description": "Portfolio of Tino Tom, Frontend Engineer specializing in React, TypeScript, and modern UI architecture.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c1222",
+  "theme_color": "#0c1222",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
