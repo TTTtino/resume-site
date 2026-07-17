@@ -10,10 +10,10 @@
       <stop offset="100%" stop-color="#00aeef" stop-opacity="0.35"/>
     </linearGradient>
   </defs>
-  <rect width="32" height="32" rx="8" fill="#0c1222"/>
-  <rect x="2" y="2" width="28" height="28" rx="6" fill="none" stroke="url(#edge)" stroke-width="1.25"/>
+  <rect width="32" height="32" fill="#0c1222"/>
+  <rect x="2.25" y="2.25" width="27.5" height="27.5" rx="6" fill="none" stroke="url(#edge)" stroke-width="1.15"/>
   <g fill="url(#tt)">
-    <path d="M9.4 10.5h6v2h-1.95v10h-2.15v-10H9.4v-2z"/>
-    <path d="M16.6 10.5h6v2H20.65v10h-2.15v-10H16.6v-2z"/>
+    <path d="M10.2 11.2h5.2v1.8h-1.7v9h-1.8v-9h-1.7v-1.8z"/>
+    <path d="M16.6 11.2h5.2v1.8h-1.7v9h-1.8v-9h-1.7v-1.8z"/>
   </g>
 </svg>
