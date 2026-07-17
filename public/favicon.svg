@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="tinotom.dev">
+  <defs>
+    <linearGradient id="tt" x1="8" y1="8" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4dc6f4"/>
+      <stop offset="55%" stop-color="#00aeef"/>
+      <stop offset="100%" stop-color="#33bef2"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4dc6f4" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#00aeef" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <rect x="2.25" y="2.25" width="27.5" height="27.5" rx="6" fill="#0c1222"/>
+  <rect x="2.25" y="2.25" width="27.5" height="27.5" rx="6" fill="none" stroke="url(#edge)" stroke-width="1.15"/>
+  <g fill="url(#tt)">
+    <path d="M10.2 11.2h5.2v1.8h-1.7v9h-1.8v-9h-1.7v-1.8z"/>
+    <path d="M16.6 11.2h5.2v1.8h-1.7v9h-1.8v-9h-1.7v-1.8z"/>
+  </g>
+</svg>
