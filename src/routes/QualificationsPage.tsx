@@ -47,7 +47,7 @@ const QualificationsPage = () => {
             title: format(value.date, 'MMM yyyy'),
           }))}
           interaction={{ pointClick: false }}
-          layout={{ cardHeight: 0 }}
+          layout={{ cardHeight: 'auto' }}
           display={{ toolbar: { enabled: false } }}
         >
           {qualifications.map((value, index) => {

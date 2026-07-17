@@ -83,7 +83,7 @@ const ExperiencePage = () => {
             title: format(value.start, 'MMM yyyy'),
           }))}
           interaction={{ pointClick: false }}
-          layout={{ cardHeight: 0 }}
+          layout={{ cardHeight: 'auto' }}
           display={{ toolbar: { enabled: false } }}
         >
           {workExperience.map((value, index) => {

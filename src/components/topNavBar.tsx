@@ -64,7 +64,9 @@ export const MobileNavBar = (props: NavbarProps) => {
               Hi, I'm <span className=" highlight-blue-gradient">Tino</span>
             </div>
             <div className="text-sm font-normal text-center">
-              An MSci <span className="highlight-blue-gradient">Computer Science</span> Student
+              Frontend Engineer · First Class{' '}
+              <span className="highlight-blue-gradient">Computer Science</span>{' '}
+              Graduate
             </div>
           </div>
         </div>
@@ -112,7 +114,9 @@ export const TopNavBar = (props: NavbarProps) => {
             <span className=" highlight-blue-gradient">Tino</span>
           </div>
           <div className="text-sm font-normal text-end">
-            An MSci <span className="highlight-blue-gradient">Computer Science</span> Student
+            Frontend Engineer · First Class{' '}
+            <span className="highlight-blue-gradient">Computer Science</span>{' '}
+            Graduate
           </div>
         </div>
 
