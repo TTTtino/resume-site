@@ -19,9 +19,11 @@ export interface WorkExperience {
 }
 
 const streetsHeaverIcon = (
-  <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white rounded-full bg-secondary-500 sm:text-sm">
-    SH
-  </div>
+  <img
+    className="absolute inset-0 object-cover w-full h-full rounded-full"
+    src="/streets-heaver-logo.png"
+    alt="Streets Heaver Healthcare Computing Logo"
+  />
 )
 
 const uonIcon = (
