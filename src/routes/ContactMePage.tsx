@@ -2,6 +2,7 @@ import { FormEvent, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { RiLinkedinBoxFill } from 'react-icons/ri'
 import Page from '@components/page'
+import { FORMSPREE_FORM_ID } from '../api/contact'
 import { useSubmitContact } from '../hooks/useSubmitContact'
 
 interface ContactFormState {
@@ -204,17 +205,11 @@ const ContactMePage = () => {
 
               <button
                 type="submit"
-                disabled={isSubmitting || !import.meta.env.VITE_FORMSPREE_FORM_ID}
+                disabled={isSubmitting || !FORMSPREE_FORM_ID}
                 className="rounded-md bg-secondary-500 px-5 py-3 font-semibold text-white transition hover:bg-secondary-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? 'Sending…' : 'Send message'}
               </button>
-
-              {!import.meta.env.VITE_FORMSPREE_FORM_ID && (
-                <p className="text-sm font-light text-amber-200">
-                  Contact form is unavailable until Formspree is configured.
-                </p>
-              )}
             </form>
           )}
 

@@ -7,6 +7,15 @@ export interface ContactFormPayload {
   _gotcha?: string
 }
 
+interface FormspreeErrorBody {
+  error?: string
+  errors?: Array<{
+    code?: string
+    field?: string
+    message?: string
+  }>
+}
+
 export class ContactSubmitError extends Error {
   status: number
 
@@ -17,22 +26,16 @@ export class ContactSubmitError extends Error {
   }
 }
 
-const getFormspreeEndpoint = () => {
-  const formId = import.meta.env.VITE_FORMSPREE_FORM_ID
+/** Public Formspree form ID — safe to ship in the client bundle */
+export const FORMSPREE_FORM_ID =
+  import.meta.env.VITE_FORMSPREE_FORM_ID?.trim() || 'mdaqevdq'
 
-  if (!formId) {
-    throw new ContactSubmitError(
-      'Contact form is not configured. Set VITE_FORMSPREE_FORM_ID.',
-      500,
-    )
-  }
-
-  return `https://formspree.io/f/${formId}`
-}
+const getFormspreeEndpoint = () => `https://formspree.io/f/${FORMSPREE_FORM_ID}`
 
 export async function submitContactForm(
   payload: ContactFormPayload,
 ): Promise<void> {
+  // React + Vite AJAX submit (same contract as Formspree's React/AJAX guides)
   const response = await fetch(getFormspreeEndpoint(), {
     method: 'POST',
     headers: {
@@ -42,6 +45,7 @@ export async function submitContactForm(
     body: JSON.stringify({
       name: payload.name,
       email: payload.email,
+      _replyto: payload.email,
       subject: payload.subject,
       message: payload.message,
       _gotcha: payload._gotcha ?? '',
@@ -55,14 +59,12 @@ export async function submitContactForm(
   let message = 'Something went wrong while sending your message. Please try again.'
 
   try {
-    const data = (await response.json()) as {
-      error?: string
-      errors?: Array<{ message?: string }>
-    }
-    message =
-      data.error ??
-      data.errors?.map((entry) => entry.message).filter(Boolean).join(' ') ??
-      message
+    const data = (await response.json()) as FormspreeErrorBody
+    const fieldErrors = data.errors
+      ?.map((entry) => entry.message)
+      .filter((value): value is string => Boolean(value))
+
+    message = data.error ?? (fieldErrors?.length ? fieldErrors.join(' ') : message)
   } catch {
     // Keep the default message when the error body is not JSON.
   }
