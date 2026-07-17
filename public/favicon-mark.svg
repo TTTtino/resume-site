@@ -10,7 +10,7 @@
       <stop offset="100%" stop-color="#00aeef" stop-opacity="0.4"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" fill="#0c1222"/>
+  <rect x="40" y="40" width="432" height="432" rx="88" fill="#0c1222"/>
   <rect x="40" y="40" width="432" height="432" rx="88" fill="none" stroke="url(#edge)" stroke-width="14"/>
   <g fill="url(#tt)">
     <path d="M168 184h80v28H220v144h-32V212h-20v-28z"/>
