@@ -21,7 +21,7 @@ declare module '*.mdx' {
   }
 
   const MDXComponent: ComponentType<{
-    components?: Record<string, ComponentType<any>>
+    components?: Record<string, ComponentType<Record<string, unknown>>>
     children?: ReactNode
   }>
 

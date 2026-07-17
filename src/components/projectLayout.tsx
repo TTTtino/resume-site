@@ -7,8 +7,10 @@ import { ProjectGallery } from './projectGallery'
 
 const components = { FaItchIo, FaLink }
 
+type MdxComponents = Record<string, ComponentType<Record<string, unknown>>>
+
 interface ProjectPageProps {
-  Content: ComponentType<{ components?: Record<string, ComponentType<any>> }>
+  Content: ComponentType<{ components?: MdxComponents }>
   meta: ProjectData
 }
 

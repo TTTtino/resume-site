@@ -11,7 +11,9 @@ export interface ProjectData {
 }
 
 export interface ProjectModule {
-  default: ComponentType<{ components?: Record<string, ComponentType<any>> }>
+  default: ComponentType<{
+    components?: Record<string, ComponentType<Record<string, unknown>>>
+  }>
   frontmatter: Omit<ProjectData, 'slug'>
 }
 

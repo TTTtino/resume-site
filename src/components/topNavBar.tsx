@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { BsChevronUp } from 'react-icons/bs'
@@ -68,10 +68,12 @@ export const MobileNavBar = (props: NavbarProps) => {
   const [navOpen, setNavOpen] = useState(false)
   const { pathname } = useLocation()
   const reduceMotion = useReducedMotion()
+  const [menuPath, setMenuPath] = useState(pathname)
 
-  useEffect(() => {
-    setNavOpen(false)
-  }, [pathname])
+  if (menuPath !== pathname) {
+    setMenuPath(pathname)
+    if (navOpen) setNavOpen(false)
+  }
 
   return (
     <div className="md:hidden">
