@@ -27,7 +27,7 @@ const QualificationCard = (props: { data: Qualification; index?: number }) => {
       </div>
       <h5 className="flex items-center gap-1 lg:ml-2">
         <BiCalendar />
-        {`${props.data.date > new Date() ? format(props.data.date, 'MMM yyyy') : `Ongoing (${format(props.data.date, 'MMM yyyy')})`}`}
+        {format(props.data.date, 'MMM yyyy')}
       </h5>
 
       {props.data.grades && <div className="mt-2">{props.data.grades}</div>}

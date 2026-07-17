@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { RiSuitcaseFill, RiCodeBoxFill } from 'react-icons/ri'
 import { IoMdSchool, IoMdHome, IoMdMail } from 'react-icons/io'
+import { FaTools } from 'react-icons/fa'
 
 export interface NavInfo {
   name: string
@@ -18,6 +19,11 @@ export default [
     name: 'Experience',
     href: '/experience',
     icon: <RiSuitcaseFill className="w-8 h-full " />,
+  },
+  {
+    name: 'Skills',
+    href: '/skills',
+    icon: <FaTools className="w-7 h-full " />,
   },
   {
     name: 'Qualifications',

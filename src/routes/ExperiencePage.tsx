@@ -54,7 +54,17 @@ const ExperienceCard = (props: { data: WorkExperience }) => {
 
       {props.data.description && (
         <div className="mt-2">
-          <p className="font-light">{props.data?.description}</p>
+          {Array.isArray(props.data.description) ? (
+            <ul className="pl-5 space-y-2 font-light list-disc">
+              {props.data.description.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="font-light whitespace-pre-line">
+              {props.data.description}
+            </p>
+          )}
         </div>
       )}
     </div>
