@@ -5,7 +5,6 @@ import {
   RiFileCodeFill,
   RiLightbulbFlashFill,
   RiLinkedinBoxFill,
-  RiMailFill,
 } from 'react-icons/ri'
 import { NavInfo } from '@data/navigation'
 
@@ -86,13 +85,6 @@ export const SideNavBar = (props: NavbarProps) => {
             >
               <RiLinkedinBoxFill className="inline-block w-8 h-full md:mr-2" />
               <span className="hidden md:inline-block">LinkedIn</span>
-            </a>
-            <a
-              href="mailto:tinotom7@outlook.com"
-              className="p-3 mx-2 bg-white bg-opacity-0 rounded-md text-white/80 hover:bg-opacity-30"
-            >
-              <RiMailFill className="inline-block w-8 h-full md:mr-2" />
-              <span className="hidden md:inline-block">Email Me</span>
             </a>
           </li>
         </ul>
