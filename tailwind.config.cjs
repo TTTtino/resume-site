@@ -8,7 +8,6 @@ module.exports = {
     "./_projects/**/*.mdx",
   ],
   theme: {
-
     extend: {
       screens: {
         '3xl': '1792px',
@@ -53,7 +52,12 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Roboto', ...defaultTheme.fontFamily.sans]
+        sans: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+        display: ['var(--font-display)', ...defaultTheme.fontFamily.sans],
+        body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+      },
+      boxShadow: {
+        glow: '0 0 0 1px rgba(0, 174, 239, 0.15), 0 12px 40px rgba(0, 0, 0, 0.35)',
       },
       transitionProperty: {
         'borderColor': 'borderColor'

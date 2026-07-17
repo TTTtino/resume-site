@@ -2,111 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .highlight-blue-gradient {
-    @apply font-black text-transparent bg-clip-text bg-gradient-to-tl from-secondary-500 to-primary-400;
+:root {
+  --color-bg: #0c1222;
+  --color-bg-elevated: #0f172a;
+  --color-primary: #00aeef;
+  --color-secondary: #1f2f98;
+  --font-display: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --surface-glow: radial-gradient(
+      ellipse 80% 50% at 15% -10%,
+      rgba(0, 174, 239, 0.16),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 90% 10%,
+      rgba(31, 47, 152, 0.28),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 50% 35% at 50% 100%,
+      rgba(0, 174, 239, 0.08),
+      transparent 55%
+    );
+  --surface-grid: linear-gradient(
+      rgba(148, 163, 184, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: #f8fafc;
+    background-color: var(--color-bg);
+    background-image: var(--surface-glow);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(0, 174, 239, 0.35);
+    color: #f8fafc;
   }
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "Roboto", sans-serif;
+@layer components {
+  .highlight-blue-gradient {
+    @apply font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary-300 via-primary-400 to-secondary-300;
+  }
+
+  .site-atmosphere {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .site-atmosphere::before {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--surface-grid);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent);
+    opacity: 0.7;
+  }
+
+  .nav-link {
+    @apply relative inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors duration-200;
+  }
+
+  .nav-link:hover {
+    @apply text-primary-200;
+  }
+
+  .nav-link-active {
+    @apply text-primary-200;
+  }
+
+  .nav-link-active::after {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.2rem;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #00aeef, #4c59ad);
+  }
+
+  .page-title {
+    @apply font-display text-4xl font-semibold tracking-tight sm:text-5xl;
+  }
+
+  .section-kicker {
+    @apply mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary-300/80;
+  }
 }
 
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url("/fonts/Roboto-Black.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Roboto-Bold.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/Roboto-Medium.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/Roboto-Regular.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/Roboto-Light.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 100;
-  font-display: swap;
-  src: url("/fonts/Roboto-Thin.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 900;
-  font-display: swap;
-  src: url("/fonts/Roboto-BlackItalic.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Roboto-BoldItalic.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/Roboto-MediumItalic.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/Roboto-Italic.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/Roboto-LightItalic.ttf");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 100;
-  font-display: swap;
-  src: url("/fonts/Roboto-ThinItalic.ttf");
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -1,4 +1,3 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Navigate, useParams } from 'react-router-dom'
 import Page from '@components/page'
 import { getProjectModule } from '@data/projectPage'
