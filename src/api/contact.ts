@@ -1,3 +1,5 @@
+import axios, { isAxiosError } from 'axios'
+
 export interface ContactFormPayload {
   name: string
   email: string
@@ -32,42 +34,47 @@ export const FORMSPREE_FORM_ID =
 
 const getFormspreeEndpoint = () => `https://formspree.io/f/${FORMSPREE_FORM_ID}`
 
+const getErrorMessage = (data: FormspreeErrorBody | undefined) => {
+  const fallback =
+    'Something went wrong while sending your message. Please try again.'
+  const fieldErrors = data?.errors
+    ?.map((entry) => entry.message)
+    .filter((value): value is string => Boolean(value))
+
+  return data?.error ?? (fieldErrors?.length ? fieldErrors.join(' ') : fallback)
+}
+
 export async function submitContactForm(
   payload: ContactFormPayload,
 ): Promise<void> {
-  // React + Vite AJAX submit (same contract as Formspree's React/AJAX guides)
-  const response = await fetch(getFormspreeEndpoint(), {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: payload.name,
-      email: payload.email,
-      _replyto: payload.email,
-      subject: payload.subject,
-      message: payload.message,
-      _gotcha: payload._gotcha ?? '',
-    }),
-  })
-
-  if (response.ok) {
-    return
-  }
-
-  let message = 'Something went wrong while sending your message. Please try again.'
-
   try {
-    const data = (await response.json()) as FormspreeErrorBody
-    const fieldErrors = data.errors
-      ?.map((entry) => entry.message)
-      .filter((value): value is string => Boolean(value))
+    await axios.post(
+      getFormspreeEndpoint(),
+      {
+        name: payload.name,
+        email: payload.email,
+        _replyto: payload.email,
+        subject: payload.subject,
+        message: payload.message,
+        _gotcha: payload._gotcha ?? '',
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    )
+  } catch (error) {
+    if (isAxiosError<FormspreeErrorBody>(error)) {
+      throw new ContactSubmitError(
+        getErrorMessage(error.response?.data),
+        error.response?.status ?? 500,
+      )
+    }
 
-    message = data.error ?? (fieldErrors?.length ? fieldErrors.join(' ') : message)
-  } catch {
-    // Keep the default message when the error body is not JSON.
+    throw new ContactSubmitError(
+      'Something went wrong while sending your message. Please try again.',
+      500,
+    )
   }
-
-  throw new ContactSubmitError(message, response.status)
 }
