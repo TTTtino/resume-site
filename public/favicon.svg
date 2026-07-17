@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="tinotom.dev">
   <defs>
-    <linearGradient id="tt" x1="6" y1="6" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+    <linearGradient id="tt" x1="8" y1="8" x2="24" y2="24" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#4dc6f4"/>
       <stop offset="55%" stop-color="#00aeef"/>
       <stop offset="100%" stop-color="#33bef2"/>
@@ -11,9 +11,9 @@
     </linearGradient>
   </defs>
   <rect width="32" height="32" rx="8" fill="#0c1222"/>
-  <rect x="1.25" y="1.25" width="29.5" height="29.5" rx="7" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+  <rect x="2" y="2" width="28" height="28" rx="6" fill="none" stroke="url(#edge)" stroke-width="1.25"/>
   <g fill="url(#tt)">
-    <path d="M7.2 9.1h7.05v2.35H12.1v11.45h-2.7V11.45H7.2V9.1z"/>
-    <path d="M16.55 9.1H24.8v2.35h-2.15v11.45h-2.7V11.45h-3.4V9.1z"/>
+    <path d="M9.4 10.5h6v2h-1.95v10h-2.15v-10H9.4v-2z"/>
+    <path d="M16.6 10.5h6v2H20.65v10h-2.15v-10H16.6v-2z"/>
   </g>
 </svg>
