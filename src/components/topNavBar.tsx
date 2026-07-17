@@ -77,16 +77,18 @@ export const MobileNavBar = (props: NavbarProps) => {
 
   return (
     <div className="md:hidden">
-      {pathname !== '/' && (
-        <div className="sticky top-0 z-10 border-b border-white/5 bg-dark-slate-200/80 px-4 py-3 backdrop-blur-md">
+      <header className="fixed inset-x-0 top-0 z-30 border-b border-white/5 bg-dark-slate-200/90 px-4 py-3 backdrop-blur-xl">
+        <Link to="/" className="block">
           <div className="font-display text-2xl font-semibold tracking-tight">
             <span className="highlight-blue-gradient">Tino Tom</span>
           </div>
           <p className="mt-0.5 text-xs text-slate-300">
             Frontend Engineer · First Class Computer Science Graduate
           </p>
-        </div>
-      )}
+        </Link>
+      </header>
+      {/* Spacer so content clears the fixed mobile brand header */}
+      <div className="h-[4.75rem]" aria-hidden="true" />
 
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-20">
         <div className="pointer-events-auto mx-auto max-w-lg px-3 pb-3">
@@ -143,36 +145,40 @@ export const TopNavBar = (props: NavbarProps) => {
   const { pathname } = useLocation()
 
   return (
-    <header className="sticky top-0 z-20 hidden border-b border-white/5 bg-dark-slate-200/75 backdrop-blur-xl md:block">
-      <div className="mx-auto flex max-w-6xl items-start justify-between gap-6 px-6 py-4 lg:px-8">
-        <Link to="/" className="group min-w-0 shrink">
-          <div className="font-display text-3xl font-semibold tracking-tight xl:text-4xl">
-            <span className="hidden xl:inline">
-              Hi, I&apos;m <span className="highlight-blue-gradient">Tino</span>
-            </span>
-            <span className="xl:hidden">
-              <span className="highlight-blue-gradient">Tino</span>
-            </span>
-          </div>
-          <p className="mt-1 max-w-xs text-right text-xs text-slate-300 xl:max-w-none xl:text-sm">
-            Frontend Engineer · First Class{' '}
-            <span className="highlight-blue-gradient">Computer Science</span>{' '}
-            Graduate
-          </p>
-        </Link>
+    <>
+      <header className="fixed inset-x-0 top-0 z-30 hidden border-b border-white/5 bg-dark-slate-200/90 backdrop-blur-xl md:block">
+        <div className="mx-auto flex max-w-6xl items-start justify-between gap-6 px-6 py-4 lg:px-8">
+          <Link to="/" className="group min-w-0 shrink">
+            <div className="font-display text-3xl font-semibold tracking-tight xl:text-4xl">
+              <span className="hidden xl:inline">
+                Hi, I&apos;m <span className="highlight-blue-gradient">Tino</span>
+              </span>
+              <span className="xl:hidden">
+                <span className="highlight-blue-gradient">Tino</span>
+              </span>
+            </div>
+            <p className="mt-1 max-w-xs text-right text-xs text-slate-300 xl:max-w-none xl:text-sm">
+              Frontend Engineer · First Class{' '}
+              <span className="highlight-blue-gradient">Computer Science</span>{' '}
+              Graduate
+            </p>
+          </Link>
 
-        <nav aria-label="Primary">
-          <ul className="flex flex-wrap items-center justify-end gap-1">
-            {props.navigationData.map((item) => (
-              <NavElement
-                key={item.href}
-                info={item}
-                active={isActivePath(pathname, item.href)}
-              />
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </header>
+          <nav aria-label="Primary">
+            <ul className="flex flex-wrap items-center justify-end gap-1">
+              {props.navigationData.map((item) => (
+                <NavElement
+                  key={item.href}
+                  info={item}
+                  active={isActivePath(pathname, item.href)}
+                />
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </header>
+      {/* Spacer so content clears the fixed desktop header */}
+      <div className="hidden h-[6.5rem] md:block xl:h-[7.25rem]" aria-hidden="true" />
+    </>
   )
 }

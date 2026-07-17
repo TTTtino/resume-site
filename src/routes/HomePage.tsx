@@ -8,7 +8,7 @@ const HomePage = () => {
 
   return (
     <Page title="Home">
-      <section className="flex min-h-[calc(100dvh-8rem)] flex-col justify-center py-8 md:min-h-[calc(100dvh-7rem)]">
+      <section className="flex min-h-[calc(100dvh-10rem)] flex-col justify-center py-8 md:min-h-[calc(100dvh-9rem)]">
         <motion.div
           className="max-w-3xl"
           initial="hidden"
