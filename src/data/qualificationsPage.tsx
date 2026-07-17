@@ -13,9 +13,21 @@ export const qualifications: Qualification[] = [
   {
     name: 'MSci Computer Science (Hons)',
     institution: 'University of Nottingham',
-    date: new Date(2023, 7, 1),
+    date: new Date(2023, 6, 1),
     location: 'Nottingham',
-    grades: 'Working towards 1st class',
+    grades: (
+      <ul className="pl-5 space-y-1 list-disc">
+        <li>First Class Degree</li>
+        <li>
+          Recipient of the High Achiever Award (awarded to the top 5% of
+          students)
+        </li>
+        <li>
+          Student Mentor running fortnightly technical workshops to reinforce
+          programming fundamentals
+        </li>
+      </ul>
+    ),
     icon: (
       <img
         className="absolute inset-0 object-cover w-full h-full rounded-full"
@@ -25,30 +37,27 @@ export const qualifications: Qualification[] = [
     ),
   },
   {
-    name: 'A-level (GCE Advanced Level)',
-    institution: 'Hucknall Sixth Form Centre',
-    date: new Date(2019, 7, 1),
-    location: 'Hucknall, Nottingham',
-    grades: 'Working towards 1st class',
-    icon: (
-      <img
-        className="absolute inset-0 object-cover w-full h-full rounded-full"
-        src="/uon-logo.jpg"
-        alt="University of Nottingham Logo"
-      />
+    name: 'A Level & GCSE',
+    institution: 'National C of E Academy',
+    date: new Date(2019, 6, 1),
+    location: 'Nottingham',
+    grades: (
+      <ul className="pl-5 space-y-1 list-disc">
+        <li>
+          A Level: Mathematics (A), Computer Science (A), Extended Project (A),
+          Physics (B)
+        </li>
+        <li>
+          GCSE: Grade 9 in Mathematics, Grade A in Computer Science, plus 8
+          additional A*-B grades
+        </li>
+      </ul>
     ),
-  },
-  {
-    name: 'GCSE (General Certificate of Secondary Education)',
-    institution: 'National Church of England Academy',
-    date: new Date(2017, 7, 1),
-    location: 'Hucknall, Nottingham',
-    grades: 'Working towards 1st class',
     icon: (
       <img
         className="absolute inset-0 object-cover w-full h-full rounded-full"
         src="/uon-logo.jpg"
-        alt="University of Nottingham Logo"
+        alt="National C of E Academy"
       />
     ),
   },

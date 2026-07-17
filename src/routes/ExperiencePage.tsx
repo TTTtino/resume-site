@@ -1,24 +1,24 @@
 import Page from '@components/page'
+import Timeline from '@components/timeline'
 import { workExperience, WorkExperience } from '@data/experiencePage'
 import { format } from 'date-fns'
-import { Chrono } from 'react-chrono'
 import { RiMapPinFill } from 'react-icons/ri'
 import { BiBuildings, BiCalendar } from 'react-icons/bi'
 import { Pill } from '@components/pill'
-import { ChronoTheme } from '@data/generic'
 
 const ExperienceCard = (props: { data: WorkExperience }) => {
   return (
-    <div className="w-full py-2">
-      <div className="flex flex-col sm:flex-row sm:items-center">
-        <div className="relative w-10 h-10 mb-1 border rounded-full sm:mb-0 sm:mr-2 sm:h-12 sm:w-12">
+    <div className="w-full py-1">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border">
           {props.data.icon}
         </div>
-        <div>
+        <div className="min-w-0">
           <h2 className="text-xl font-extrabold">
-            {props.data.role} · <span className="font-normal">{props.data.type}</span>
+            {props.data.role} ·{' '}
+            <span className="font-normal">{props.data.type}</span>
           </h2>
-          <div className="flex w-full font-semibold ">
+          <div className="flex w-full font-semibold">
             <a
               href={props.data.company.link ? props.data.company.link : '#'}
               className="flex items-center gap-1 rounded-md hover:underline"
@@ -31,30 +31,39 @@ const ExperienceCard = (props: { data: WorkExperience }) => {
             <RiMapPinFill />
             {props.data.location}
           </span>
+          <h3 className="mt-1 flex items-center gap-1">
+            <BiCalendar />
+            {`${format(props.data.start, 'MMM yyyy')} - ${props.data.end ? format(props.data.end, 'MMM yyyy') : 'Ongoing'}`}
+          </h3>
         </div>
       </div>
-      <h3 className="flex items-center gap-1 lg:ml-2">
-        <BiCalendar />
-        {`${format(props.data.start, 'MMM yyyy')} - ${props.data.end ? format(props.data.end, 'MMM yyyy') : 'Ongoing'}`}
-      </h3>
+
       {props.data.technologies && (
-        <div className="flex flex-wrap gap-2 mt-1">
-          {props.data.technologies?.map((value, index) => {
-            return (
-              <Pill
-                key={index}
-                text={value.name}
-                icon={value.icon}
-                className="text-white bg-secondary-500"
-              />
-            )
-          })}
+        <div className="mt-3 flex flex-wrap gap-2">
+          {props.data.technologies.map((value, index) => (
+            <Pill
+              key={index}
+              text={value.name}
+              icon={value.icon}
+              className="bg-secondary-500 text-white"
+            />
+          ))}
         </div>
       )}
 
       {props.data.description && (
-        <div className="mt-2">
-          <p className="font-light">{props.data?.description}</p>
+        <div className="mt-3">
+          {Array.isArray(props.data.description) ? (
+            <ul className="list-disc space-y-2 pl-5 font-light">
+              {props.data.description.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="whitespace-pre-line font-light">
+              {props.data.description}
+            </p>
+          )}
         </div>
       )}
     </div>
@@ -64,22 +73,15 @@ const ExperienceCard = (props: { data: WorkExperience }) => {
 const ExperiencePage = () => {
   return (
     <Page title="Experience">
-      <h1 className="pt-5 pl-5 text-5xl font-bold ">Experience</h1>
-      <div className="">
-        <Chrono
-          mode="vertical"
-          theme={ChronoTheme}
-          items={workExperience.map((value) => ({
+      <div className="p-5">
+        <h1 className="mb-8 text-5xl font-bold">Experience</h1>
+        <Timeline
+          items={workExperience.map((value, index) => ({
+            id: `${value.company.name}-${value.role}-${index}`,
             title: format(value.start, 'MMM yyyy'),
+            content: <ExperienceCard data={value} />,
           }))}
-          interaction={{ pointClick: false }}
-          layout={{ cardHeight: 0 }}
-          display={{ toolbar: { enabled: false } }}
-        >
-          {workExperience.map((value, index) => {
-            return <ExperienceCard key={index} data={value} />
-          })}
-        </Chrono>
+        />
       </div>
     </Page>
   )

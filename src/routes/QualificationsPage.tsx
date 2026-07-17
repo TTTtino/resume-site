@@ -1,59 +1,46 @@
 import Page from '@components/page'
-import { qualifications, Qualification } from '@data/qualificationsPage'
+import Timeline from '@components/timeline'
+import { qualifications } from '@data/qualificationsPage'
 import { format } from 'date-fns'
-import { Chrono } from 'react-chrono'
 import { RiMapPinFill } from 'react-icons/ri'
 import { BiBuildings, BiCalendar } from 'react-icons/bi'
-import { ChronoTheme } from '@data/generic'
-
-const QualificationCard = (props: { data: Qualification; index?: number }) => {
-  return (
-    <div className="w-full py-2" key={props?.index}>
-      <div className="flex flex-col sm:flex-row sm:items-center">
-        <div className="relative w-10 h-10 mb-1 border rounded-full sm:mb-0 sm:mr-2 sm:h-12 sm:w-12">
-          {props.data.icon}
-        </div>
-        <div>
-          <h3 className="text-xl font-extrabold">{props.data.name}</h3>
-          <div className="flex items-center gap-1 font-semibold">
-            <BiBuildings />
-            {props.data.institution}
-          </div>
-          <span className="flex items-center gap-1 font-semibold">
-            <RiMapPinFill />
-            {props.data.location}
-          </span>
-        </div>
-      </div>
-      <h5 className="flex items-center gap-1 lg:ml-2">
-        <BiCalendar />
-        {`${props.data.date > new Date() ? format(props.data.date, 'MMM yyyy') : `Ongoing (${format(props.data.date, 'MMM yyyy')})`}`}
-      </h5>
-
-      {props.data.grades && <div className="mt-2">{props.data.grades}</div>}
-    </div>
-  )
-}
 
 const QualificationsPage = () => {
   return (
     <Page title="Qualifications">
-      <h1 className="pt-5 pl-5 text-5xl font-bold ">Qualifications</h1>
-      <div className="">
-        <Chrono
-          mode="vertical"
-          theme={ChronoTheme}
-          items={qualifications.map((value) => ({
+      <div className="p-5">
+        <h1 className="mb-8 text-5xl font-bold">Qualifications</h1>
+        <Timeline
+          items={qualifications.map((value, index) => ({
+            id: `${value.name}-${index}`,
             title: format(value.date, 'MMM yyyy'),
+            content: (
+              <div className="w-full py-1">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border">
+                    {value.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-xl font-extrabold">{value.name}</h3>
+                    <div className="flex items-center gap-1 font-semibold">
+                      <BiBuildings />
+                      {value.institution}
+                    </div>
+                    <span className="flex items-center gap-1 font-semibold">
+                      <RiMapPinFill />
+                      {value.location}
+                    </span>
+                    <h5 className="mt-1 flex items-center gap-1">
+                      <BiCalendar />
+                      {format(value.date, 'MMM yyyy')}
+                    </h5>
+                  </div>
+                </div>
+                {value.grades && <div className="mt-3">{value.grades}</div>}
+              </div>
+            ),
           }))}
-          interaction={{ pointClick: false }}
-          layout={{ cardHeight: 0 }}
-          display={{ toolbar: { enabled: false } }}
-        >
-          {qualifications.map((value, index) => {
-            return <QualificationCard key={index} data={value} index={index} />
-          })}
-        </Chrono>
+        />
       </div>
     </Page>
   )

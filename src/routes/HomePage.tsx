@@ -10,20 +10,20 @@ const HomePage = () => {
           </div>
           <br />
           <div>
-            3rd year{' '}
-            <span className="highlight-blue-gradient">MSci Computer Science</span>{' '}
-            Student looking to gain experience in a computer science related field,
-            and improve my understanding of various concepts and programming
-            languages.{' '}
+            First class{' '}
+            <span className="highlight-blue-gradient">Computer Science</span>{' '}
+            graduate and{' '}
+            <span className="highlight-blue-gradient">Frontend Engineer</span>{' '}
+            specializing in React, TypeScript, and modern UI architecture.
           </div>
           <div>
-            I’m interested in <span className="highlight-blue-gradient">AR/VR</span>
-            , <span className="highlight-blue-gradient">Web Development</span>, and{' '}
-            <span className="highlight-blue-gradient">Game Development</span> and
-            enjoy playing
-            <span className="highlight-blue-gradient"> badminton</span> and{' '}
-            <span className="highlight-blue-gradient">drawing/sketching</span> in my
-            free time.
+            Experienced in driving engineering ownership — from migrating design
+            systems and optimizing complex state management to building automated
+            end-to-end testing pipelines with{' '}
+            <span className="highlight-blue-gradient">Playwright</span>. Adept at
+            streamlining frontend delivery via modern{' '}
+            <span className="highlight-blue-gradient">CI/CD</span> pipelines while
+            maintaining full-stack autonomy.
           </div>
         </div>
       </div>
